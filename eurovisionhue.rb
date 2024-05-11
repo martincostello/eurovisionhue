@@ -79,8 +79,8 @@ class EurovisionHue
   end
 
   def get_liveblog_text
-    url = 'https://news.sky.com/story/eurovision-2024-latest-updates-chaos-as-dutch-singer-axed-and-irish-star-demands-urgent-attention-over-separate-serious-incident-13131792'
-    Nokogiri::HTML(URI.open(url, read_timeout: 10)).css('.ncpost-container').map { |elem| elem.content }
+    url = 'https://www.bbc.co.uk/news/live/entertainment-arts-68992694'
+    Nokogiri::HTML(URI.open(url, read_timeout: 10)).css('.lx-stream-post').map { |elem| elem.content }
   end
 
   def hue

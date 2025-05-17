@@ -6,7 +6,11 @@ require 'open-uri'
 
 class EurovisionHue
   def initialize
+    hue.request_bulb_list.each do |bulb|
+      puts "#{bulb[0]}: #{bulb[1]['name']}"
+    end
     @bulb_ids = hue.request_bulb_list.map { |b| b[0] }
+    @bulb_ids = @bulb_ids.select { |id| hue.request_bulb_list[id]['name'].downcase.include? "living room" }
   end
 
   def start!
@@ -43,7 +47,11 @@ class EurovisionHue
       target_state.transition_time = 5
       target_state.xy = rgb_to_xy(*rgb)
       puts "Transitioning #{bulb_id} to #{rgb}"
-      hue.set_bulb_state(bulb_id, target_state)
+      begin
+        hue.set_bulb_state(bulb_id, target_state)
+      rescue ParameterUnavailableException => e
+        #puts "Failed to set state for bulb #{bulb_id}: #{e.message}"
+      end
     end
   end
 

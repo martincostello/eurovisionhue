@@ -79,8 +79,8 @@ class EurovisionHue
   end
 
   def get_liveblog_text
-    url = 'https://www.bbc.co.uk/news/live/entertainment-arts-68992694'
-    Nokogiri::HTML(URI.open(url, read_timeout: 10)).css('.lx-stream-post').map { |elem| elem.content }
+    url = 'https://www.bbc.co.uk/news/live/c74n9n5l1nxt'
+    Nokogiri::HTML(URI.open(url, read_timeout: 10)).css('article[data-testid="content-post"]').map { |elem| elem.content }
   end
 
   def hue
